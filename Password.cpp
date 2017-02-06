@@ -5,14 +5,20 @@ using CSC2110::ListArrayIterator;
 using namespace std;
 
 
+//constructor
+Password::Password()
+{
+   len = 0;
+   viable_words = new ListArray<String>{};
+   all_words = new ListArray<String>{};
+}
 
-
-
-
-
-
-
-
+//destructor (there is work to do here, delete the individual words)
+Password::~Password()
+{
+   delete viable_words;
+   delete all_words;
+}
 
 
 int Password::bestGuess()
