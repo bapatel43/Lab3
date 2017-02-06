@@ -4,7 +4,6 @@ using CSC2110::ListArrayIterator;
 #include <iostream>
 using namespace std;
 
-
 //constructor
 Password::Password()
 {
@@ -19,6 +18,54 @@ Password::~Password()
    delete viable_words;
    delete all_words;
 }
+
+//add a word to the list of possible passwords
+void Password::addWord(String* word)
+{
+   if (word->length() > 0)   
+   {
+      viable_words->add(word);
+      all_words->add(word);      
+   }
+
+} 
+
+//index of guessed word in the list of all words (1-based)
+//number of matches reported by fallout 3, update viable passwords list
+void Password::guess(int try_password, int num_matches)
+{
+   ListArrayIterator<String>* iter = viable_words->iterator();
+   while(iter->hasNext())
+   {
+      String* pass = iter->next(); 
+   }          
+} 
+
+//returns the number of possible passwords remaining
+int Password::getNumberOfPasswordsLeft()
+{
+  
+} 
+
+//display the current list of possible passwords
+void Password::displayViableWords()
+{
+  
+} 
+
+//get a word from the original list of all passwords, 1-based
+String* Password::getOriginalWord(int index)
+{
+   
+}
+
+//a private helper method to report the number of character matches between two Strings
+int getNumMatches(String* curr_word, String* word_guess)
+{
+      
+}
+
+
 
 
 int Password::bestGuess()
