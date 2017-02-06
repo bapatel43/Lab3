@@ -44,12 +44,12 @@ void Password::guess(int try_password, int num_matches)
 //returns the number of possible passwords remaining
 int Password::getNumberOfPasswordsLeft()
 {
-	int possibleWords = 0; //remaining number of possible passwords
+   int possibleWords = 0; //remaining number of possible passwords
 	
 	
 	
 	
-	return possibleWords;
+   return possibleWords;
 }
 
 //display the current list of possible passwords
