@@ -4,20 +4,52 @@ using CSC2110::ListArrayIterator;
 #include <iostream>
 using namespace std;
 
+#include "Text.h"
+
 //constructor
 Password::Password()
 {
    len = 0;
-   viable_words = new ListArray<String>{};
-   all_words = new ListArray<String>{};
+   viable_words = new ListArray<String>();
+   all_words = new ListArray<String>();
 }
 
 //destructor (there is work to do here, delete the individual words)
 Password::~Password()
 {
+   
+   
+   for(int i = 0; i < viable_words->size();i++){
+	   viable_words->remove(i);
+   }
    delete viable_words;
+   
+    for(int j = 0; j < all_words->size();j++){
+	   all_words->remove(j);
+   }
    delete all_words;
+   
 }
+
+
+//a private helper method to report the number of character matches between two Strings
+int Password::getNumMatches(String* curr_word, String* word_guess)
+{
+   int hits = 0;
+
+   for(int i = 0; i <= len; i++)
+   {
+      if(curr_word->charAt(i) == word_guess->charAt(i))
+      {
+         hits++;
+      }   
+   } 
+
+   return hits++;    
+}
+
+
+
 
 //add a word to the list of possible passwords
 void Password::addWord(String* word)
@@ -32,9 +64,10 @@ void Password::addWord(String* word)
 
 //index of guessed word in the list of all words (1-based)
 //number of matches reported by fallout 3, update viable passwords list
+/*
 void Password::guess(int try_password, int num_matches)
 {
-   String word;
+   String* word;
    int match;
    ListArray<String>* hold;
    ListArrayIterator<String>* iter = viable_words->iterator();
@@ -45,12 +78,35 @@ void Password::guess(int try_password, int num_matches)
       match = getNumMatches(pass, word);
       if(match == num_matches)
       {
-         hold->addWord(word);
+         hold->add(word);
       }   
    }
 
-   viable_words = hold;
+	viable_words = hold;
+	delete viable_words;
 } 
+*/
+
+	void Password::guess(int try_password,int num_matches)
+	{
+		
+		ListArray<String>* newwords = new ListArray<String>();// creat a new list array
+		ListArrayIterator<String>* iterator = viable_words->iterator();//sets up it
+		String* password = getOriginalWord(try_password);
+		while(iterator->hasNext())
+		{
+			String* word = iterator->next();//store the next words
+			int word_matches = getNumMatches(word,password);// see if the word has the right number of matches
+			if(num_matches == word_matches)
+			{
+				newwords->add(word);// add words to a new list
+			}
+			
+		}
+		delete viable_words;// del old list pointer.
+		viable_words = newwords;// reassign
+		
+	}
 
 //returns the number of possible passwords remaining
 int Password::getNumberOfPasswordsLeft()
@@ -64,9 +120,11 @@ void Password::displayViableWords()
    ListArrayIterator<String>* ite = viable_words->iterator();
    while(ite->hasNext())
    {
-      String displayPass = ite->next();
-      //cout << endl;
-      cout << displayPass << endl;
+      String* displayPass = ite->next();
+     
+      displayPass->displayString();
+	  
+	  cout << endl;
    }
 } 
 
@@ -76,28 +134,6 @@ String* Password::getOriginalWord(int index)
    return all_words->get(index);
 }
 
-//a private helper method to report the number of character matches between two Strings
-int getNumMatches(String* curr_word, String* word_guess)
-{
-  /*
-   ListArrayIterator<String>* itera = curr_word->iterator();
-   while(itera->hasNext())
-   {
-      if()    
-   } 
-   */
-   int hits = 0;
-
-   for(int i = 1; i <= curr_word->length(); i++)
-   {
-      if(curr_word->charAt(i) == word_guess->charAt(i))
-      {
-         hits++;
-      }   
-   } 
-
-   return hits;    
-}
 
  //the best word in the original list to guess next (done for you)
 int Password::bestGuess()
