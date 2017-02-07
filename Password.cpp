@@ -34,45 +34,72 @@ void Password::addWord(String* word)
 //number of matches reported by fallout 3, update viable passwords list
 void Password::guess(int try_password, int num_matches)
 {
+   String word;
+   int match;
+   ListArray<String>* hold;
    ListArrayIterator<String>* iter = viable_words->iterator();
    while(iter->hasNext())
    {
-      String* pass = iter->next(); 
-   }          
+      word = getOriginalWord(try_password);
+      String* pass = iter->next();
+      match = getNumMatches(pass, word);
+      if(match == num_matches)
+      {
+         hold->addWord(word);
+      }   
+   }
+
+   viable_words = hold;
 } 
 
 //returns the number of possible passwords remaining
 int Password::getNumberOfPasswordsLeft()
 {
-   int possibleWords = 0; //remaining number of possible passwords
-	
-	
-	
-	
-   return possibleWords;
-}
+   return viable_words->size();
+} 
 
 //display the current list of possible passwords
 void Password::displayViableWords()
 {
-  
+   ListArrayIterator<String>* ite = viable_words->iterator();
+   while(ite->hasNext())
+   {
+      String displayPass = ite->next();
+      //cout << endl;
+      cout << displayPass << endl;
+   }
 } 
 
 //get a word from the original list of all passwords, 1-based
 String* Password::getOriginalWord(int index)
 {
-   
+   return all_words->get(index);
 }
 
 //a private helper method to report the number of character matches between two Strings
 int getNumMatches(String* curr_word, String* word_guess)
 {
-      
+  /*
+   ListArrayIterator<String>* itera = curr_word->iterator();
+   while(itera->hasNext())
+   {
+      if()    
+   } 
+   */
+   int hits = 0;
+
+   for(int i = 1; i <= curr_word->length(); i++)
+   {
+      if(curr_word->charAt(i) == word_guess->charAt(i))
+      {
+         hits++;
+      }   
+   } 
+
+   return hits;    
 }
 
-
-
-
+ //the best word in the original list to guess next (done for you)
 int Password::bestGuess()
 {
    int best_guess_index = -1;
