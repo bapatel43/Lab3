@@ -4,6 +4,16 @@
 #include <iostream>
 using namespace std;
 
+#include "Text.h"
+using CSC2110::String;
+
+#include "Keyboard.h"
+using CSC2110::Keyboard;
+
+#include "ReadFile.h"
+using CSC2110::ReadFile;
+
+
 void addWords(Password* fh)
 {
    Keyboard* kb = Keyboard::getKeyboard();
